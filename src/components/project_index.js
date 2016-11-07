@@ -10,12 +10,22 @@ class ProjectIndex extends Component {
     }
 
     renderProjects() {
+
+        if (!this.props.projects) {
+            return (
+                <div className="text-center"><img src="http://s.kaskus.id/images/smilies/smilies_fb5ly1i58kbq.gif" /></div>
+            );
+        } 
+
         // console.log(this.props.projects);
         return this.props.projects.map((project) => {
             return (
-                <div key={project.id}>
-                    <strong>{project.name}</strong>
-                </div>
+                <Link key={project.id} to={"projects/" + project.id}>
+                    <li className="list-group-item" >
+                        <strong>{project.name}</strong>
+                        <span className="pull-right">Owner: {project.user_id}</span>    
+                    </li>
+                </Link>
             );   
         });
     }
@@ -23,7 +33,15 @@ class ProjectIndex extends Component {
     render() {
         return (
             <div>
-                {this.renderProjects()}
+                <div className="text-xs-right">
+                    <Link to="/projects/search" className="btn btn-primary pull-right"> 
+                        Search Project
+                    </Link>
+                </div>
+                <h3>Projects</h3>
+                <ul className="list-group">
+                    {this.renderProjects()}
+                </ul>
             </div>
         );
     }
